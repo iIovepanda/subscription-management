@@ -10,8 +10,9 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        $subscriptions = $user->subscriptions
-        //$subscriptions = ｓubscription::all()
+        $subscriptions = $user->subscriptions()
+            ->with('category', 'usageFrequency')
+            ->get()
             ->map(function ($sub) {
                 $sub->monthly_price = $sub->billing_cycle === 'yearly'
                     ? round($sub->price / 12)
@@ -19,8 +20,7 @@ class DashboardController extends Controller
 
                 return $sub;
             })
-            ->sortByDesc('monthly_price')
-            ->take(3);
+            ->sortByDesc('monthly_price');
 
         // 月額合計
         $monthlyTotal = $subscriptions->sum('price');
