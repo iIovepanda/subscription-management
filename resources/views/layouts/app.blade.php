@@ -32,5 +32,18 @@
                 {{ $slot }}
             </main>
         </div>
+        <!-- 登録成功表示 -->
+        @if (session('success'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 3000)"
+                class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded shadow-lg"
+            >
+                {{ session('success') }}
+            </div>
+        @endif
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        @stack('scripts')
     </body>
 </html>
