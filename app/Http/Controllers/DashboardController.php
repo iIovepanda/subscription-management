@@ -23,9 +23,9 @@ class DashboardController extends Controller
             ->sortByDesc('monthly_price');
 
         // 月額合計
-        $monthlyTotal = $subscriptions->sum('price');
+        $monthlyTotal = $subscriptions->sum('monthly_price');
 
-        // 年額（仮：12倍）
+        // 年額（12倍）
         $yearlyTotal = $monthlyTotal * 12;
 
         // 件数
@@ -41,11 +41,10 @@ class DashboardController extends Controller
             });
 
         // カテゴリ名も取得
-        $categoryData = $categoryData->map(function ($data, $categoryId) {
-            $category = \App\Models\Category::find($categoryId);
-
+        $allCategories = $subscriptions->first()->category;
+        $categoryData = $categoryData->map(function ($data, $categoryId) use ($allCategories) {
             return [
-                'name' => $category->name ?? '未分類',
+                'name' => $allCategories[$categoryId]->name ?? '未分類',
                 'total' => $data['total'],
                 'items' => $data['items']
             ];

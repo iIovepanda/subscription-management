@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $fillable = [];
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);

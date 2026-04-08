@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSubscriptionRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\UsageFrequency;
@@ -9,15 +10,6 @@ use App\Models\Subscription;
 
 class SubscriptionController extends Controller
 {
-    public function index()
-    {
-        $subscriptions = auth()->user()
-            ->subscriptions()
-            ->with(['category'])
-            ->get();
-
-        return view('subscriptions.index', compact('subscriptions'));
-    }
 
     public function create()
     {
@@ -27,30 +19,11 @@ class SubscriptionController extends Controller
         return view('subscriptions.create', compact('categories', 'frequencies'));
     }
 
-    public function store(Request $request)
+    public function store(StoreSubscriptionRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|integer',
-            'category_id' => 'required',
-            'usage_frequency_id' => 'required|exists:usage_frequencies,id',
-            'start_date' => 'required|date',
-            'next_payment_date' => 'required|date',
-            'billing_cycle' => 'required',
-            'status' => 'required',
-        ]);
-
-        Subscription::create([
-            'user_id' => auth()->id(),
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'usage_frequency_id' => $request->usage_frequency_id,
-            'billing_cycle' => $request->billing_cycle,
-            'start_date' => $request->start_date,
-            'renewal_date' => $request->next_payment_date,
-            'status' => $request->status,
-        ]);
+        Subscription::create(
+            $request->validated() + ['user_id' => auth()->id()]
+        );
 
         return redirect()
             ->route('dashboard', ['tab' => 'list'])
@@ -59,7 +32,7 @@ class SubscriptionController extends Controller
 
     public function destroy($id)
     {
-        $subscription = Subscription::findOrFail($id);
+        $subscription = auth()->user()->subscriptions()->findOrFail($id);
         $subscription->delete();
 
         return redirect()->back()
@@ -68,39 +41,20 @@ class SubscriptionController extends Controller
 
     public function edit($id)
     {
-        $subscription = Subscription::findOrFail($id);
+        $subscription = auth()->user()->subscriptions()->findOrFail($id);
         $categories = Category::all();
         $frequencies = UsageFrequency::all();
 
         return view('subscriptions.edit', compact('subscription', 'categories', 'frequencies'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreSubscriptionRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'price' => 'required|integer',
-            'category_id' => 'required',
-            'usage_frequency_id' => 'required|exists:usage_frequencies,id',
-            'start_date' => 'required|date',
-            'next_payment_date' => 'required|date',
-            'billing_cycle' => 'required',
-            'status' => 'required',
-        ]);
+        $subscription = auth()->user()->subscriptions()->findOrFail($id);
 
-        $subscription = Subscription::findOrFail($id);
-
-        $subscription->update([
-            'user_id' => auth()->id(),
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'usage_frequency_id' => $request->usage_frequency_id,
-            'billing_cycle' => $request->billing_cycle,
-            'start_date' => $request->start_date,
-            'renewal_date' => $request->next_payment_date,
-            'status' => $request->status,
-        ]);
+        $subscription->update(
+            $request->validated()
+        );
 
         return redirect()
             ->route('dashboard', ['tab' => 'list'])

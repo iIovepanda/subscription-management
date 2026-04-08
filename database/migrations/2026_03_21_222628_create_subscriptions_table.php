@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
 
             $table->string('name');
-            $table->string('billing_cycle', 10);
+            $table->enum('billing_cycle', ['monthly', 'yearly']);
             $table->integer('price');
 
             $table->date('start_date');

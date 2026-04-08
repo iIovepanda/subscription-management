@@ -7,7 +7,7 @@ use App\Models\Subscription;
 
 class UsageFrequency extends Model
 {
-    //protected $table = 'usage_frequency';
+    protected $fillable = [];
 
     public function subscriptions()
     {

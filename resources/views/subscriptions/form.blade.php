@@ -54,8 +54,8 @@
 
         <div class="flex flex-col">
             <label class="text-sm mb-1">次回更新日</label>
-            <input type="date" name="next_payment_date"
-                value="{{ old('next_payment_date', $subscription->renewal_date ?? '') }}"
+            <input type="date" name="renewal_date"
+                value="{{ old('renewal_date', $subscription->renewal_date ?? '') }}"
                 class="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-400">
         </div>
 
