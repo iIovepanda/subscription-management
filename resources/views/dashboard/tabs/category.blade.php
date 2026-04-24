@@ -1,29 +1,27 @@
-<h2 class="text-xl font-bold mb-4">カテゴリ別利用料金</h2>
-
-<div class="space-y-4">
-
-    <div class="bg-white p-6 rounded-xl shadow w-full">
-        <div class="h-64">
-            <canvas id="categoryChart"></canvas>
-        </div>
+<h2 class="text-xl font-semibold text-gray-800 mb-6">カテゴリ別利用料金</h2>
+<div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+    <div class="h-72 max-w-xl mx-auto">
+        <canvas id="categoryChart"></canvas>
     </div>
 </div>
 
-<h2 class="text-xl font-bold mt-8 mb-4">カテゴリ別課金額 Top3</h2>
+<h2 class="text-xl font-semibold text-gray-800 mt-10 mb-6">カテゴリ別課金額 Top3</h2>
 
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-3 gap-6 mb-6">
 @foreach($topCategories as $cat)
-    <div class="p-4 bg-white rounded shadow">
-        <p class="font-bold">{{ $cat['name'] }}</p>
-        <p class="text-xl font-bold">¥{{ number_format($cat['total']) }}/月</p>
+    <div class="p-6 bg-white rounded-xl shadow-sm">
+        <p class="text-sm mb-2">{{ $cat['name'] }}</p>
+        <p class="text-3xl font-bold text-primary">¥{{ number_format($cat['total']) }}/月</p>
 
         <details class="mt-2">
-            <summary>内訳</summary>
-            @foreach($cat['items'] as $item)
-                <p class="text-sm">
-                    {{ $item->name }}：¥{{ number_format($item->monthly_price) }}
-                </p>
-            @endforeach
+            <summary class="text-sm text-gray-600 cursor-pointer hover:text-gray-800">内訳</summary>
+            <div class="mt-2 space-y-2 pl-2">
+                @foreach($cat['items'] as $item)
+                    <p class="text-sm text-gray-600">
+                        {{ $item->name }}：¥{{ number_format($item->monthly_price) }}
+                    </p>
+                @endforeach
+            </div>
         </details>
     </div>
 @endforeach
@@ -32,6 +30,13 @@
 @push('scripts')
 <script>
 const ctx = document.getElementById('categoryChart');
+const primary = getComputedStyle(document.documentElement)
+  .getPropertyValue('--color-primary')
+  .trim();
+
+const primaryLight = getComputedStyle(document.documentElement)
+  .getPropertyValue('--color-primary-light')
+  .trim();
 
 new Chart(ctx, {
     type: 'bar',
@@ -41,43 +46,68 @@ new Chart(ctx, {
             label: '月額利用料',
             data: @json($chartData),
             borderRadius: 8,
+            backgroundColor: primaryLight,
+            hoverBackgroundColor: primary,
+            borderColor: primary,
         }]
     },
     options: {
         responsive: true,
         maintainAspectRatio: false,
-
+        layout: {
+            padding: {
+                top: 8,
+                bottom: 8
+            }
+        },
         plugins: {
             legend: {
                 position: 'bottom',
                 labels: {
-                    padding: 16,
-                    boxWidth: 12,
+                    padding: 24,
+                    boxWidth: 10,
+                    color: '#6B7280',
                     font: {
-                        size: 12
-                    }
+                        size: 14,
+                    },
+                    usePointStyle: true
                 }
             },
             tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return '¥' + context.raw.toLocaleString();
-                    }
-                }
+                enabled: false
             }
         },
 
         scales: {
+            x: {
+                ticks: {
+                    color: '#6B7280',
+                    font: {
+                        size: 14,
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            },
             y: {
                 beginAtZero: true,
+                grid: {
+                    display: false,
+                    drawBorder: false
+                },
                 ticks: {
-                    callback: function(value) {
-                        return '¥' + value.toLocaleString();
+                   color: '#6B7280',
+                    font: {
+                        size: 14,
                     }
+                },
+                padding: 8,
+                callback: function(value) {
+                    return '¥' + value.toLocaleString();
                 }
             }
         },
-        //indexAxis: 'y',
     }
 });
 </script>

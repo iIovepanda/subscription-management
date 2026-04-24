@@ -4,17 +4,21 @@
 
 <x-app-layout>
 
-<div class="max-w-7xl mx-auto px-4">
-<div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-semibold">Dash board</h2>
+<div class="max-w-7xl mx-auto px-12 py-12">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
+                Dashboard
+            </h2>
+        </div>
 
-    <a href="{{ route('subscriptions.create') }}"
-       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">
-        ＋ サブスクを追加
-    </a>
-</div>
-    <div class="p-6">
-        <div class="max-w-7xl mx-auto px-4">
+        <a href="{{ route('subscriptions.create') }}"
+           class="btn-primary">
+            <x-icons.add class="w-4 h-4 fill-current" />
+            <span>サブスクを追加</span>
+        </a>
+    </div>
+    <div class="space-y-6">
         {{-- サマリー（共通） --}}
         @include('dashboard.partials.summary')
 
@@ -32,7 +36,6 @@
             @elseif ($tab === 'list')
                 @include('dashboard.tabs.list')
             @endif
-        </div>
 
     </div>
 </div>

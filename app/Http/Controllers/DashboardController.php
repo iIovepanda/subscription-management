@@ -41,7 +41,7 @@ class DashboardController extends Controller
             });
 
         // カテゴリ名も取得
-        $allCategories = $subscriptions->first()->category;
+        $allCategories = $subscriptions->pluck('category', 'category_id');
         $categoryData = $categoryData->map(function ($data, $categoryId) use ($allCategories) {
             return [
                 'name' => $allCategories[$categoryId]->name ?? '未分類',
