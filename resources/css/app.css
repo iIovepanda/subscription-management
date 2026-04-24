@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+body {
+  @apply font-sans;
+}
+:root {
+    --color-basic: #F2F2F2;
+    --color-primary: #2E7D32;
+    --color-primary-dark: #1B5E20;
+    --color-primary-light: #66BB6A;
+    --color-accent: #FFC107;
+    --color-danger: #E53935;
+}
+.btn-primary {
+    @apply inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition-colors duration-200;
+}

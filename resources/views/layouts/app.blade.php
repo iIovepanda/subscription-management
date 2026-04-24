@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-basic">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
@@ -30,7 +30,11 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+
+                <button class="bg-primary hover:bg-primary-dark text-white"></button>
+
             </main>
+
         </div>
         <!-- 登録成功表示 -->
         @if (session('success'))

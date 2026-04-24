@@ -12,7 +12,17 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['"Noto Sans JP"', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                basic: 'var(--color-basic)',
+                primary: {
+                    DEFAULT: 'var(--color-primary)',
+                    dark: 'var(--color-primary-dark)',
+                    light: 'var(--color-primary-light)',
+                },
+                accent: 'var(--color-accent)',
+                danger: 'var(--color-danger)',
             },
         },
     },
