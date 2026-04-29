@@ -11,7 +11,7 @@
 @foreach($topCategories as $cat)
     <div class="p-6 bg-white rounded-xl shadow-sm">
         <p class="text-sm mb-2">{{ $cat['name'] }}</p>
-        <p class="text-3xl font-bold text-primary">¥{{ number_format($cat['total']) }}/月</p>
+        <p class="text-3xl font-bold text-primary-500">¥{{ number_format($cat['total']) }}/月</p>
 
         <details class="mt-2">
             <summary class="text-sm text-gray-600 cursor-pointer hover:text-gray-800">内訳</summary>
@@ -31,11 +31,11 @@
 <script>
 const ctx = document.getElementById('categoryChart');
 const primary = getComputedStyle(document.documentElement)
-  .getPropertyValue('--color-primary')
+  .getPropertyValue('--color-primary-500')
   .trim();
 
 const primaryLight = getComputedStyle(document.documentElement)
-  .getPropertyValue('--color-primary-light')
+  .getPropertyValue('--color-primary-400')
   .trim();
 
 new Chart(ctx, {

@@ -31,7 +31,7 @@
             <main>
                 {{ $slot }}
 
-                <button class="bg-primary hover:bg-primary-dark text-white"></button>
+                <button class="bg-primary-500 hover:bg-primary-700 text-white"></button>
 
             </main>
 

@@ -28,7 +28,7 @@
                         <td class="px-4 py-4">{{ \Carbon\Carbon::parse($sub->renewal_date)->format('Y.m.d') }}</td>
                         <td class="px-4 py-4">
                             @if($sub->status === 'active')
-                                <span class="px-3 py-1 text-sm font-medium bg-green-100 text-green-700 rounded-full">
+                                <span class="px-3 py-1 text-sm font-medium bg-primary-50 text-primary-700 rounded-full">
                                     ● 契約中
                                 </span>
                             @else

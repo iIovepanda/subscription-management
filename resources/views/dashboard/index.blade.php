@@ -4,14 +4,8 @@
 
 <x-app-layout>
 
-<div class="max-w-7xl mx-auto px-12 py-12">
-    <div class="flex justify-between items-center mb-8">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-800 tracking-tight">
-                Dashboard
-            </h2>
-        </div>
-
+<div class="max-w-7xl mx-auto px-12 pt-6 pb-12">
+    <div class="flex justify-end items-center mb-6">
         <a href="{{ route('subscriptions.create') }}"
            class="btn-primary">
             <x-icons.add class="w-4 h-4 fill-current" />
@@ -26,7 +20,7 @@
         @include('dashboard.partials.tabs')
 
         {{-- 中身 --}}
-        <div class="mt-6">
+        <div class="mt-4">
             @if($tab === 'overview')
                 @include('dashboard.tabs.overview')
 

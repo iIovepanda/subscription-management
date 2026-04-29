@@ -7,7 +7,7 @@
         </a>
     </div>
     <p class="text-sm text-gray-500 mb-6">
-        <span class="text-rose-500">*</span> は必須項目です
+        <span class="text-danger">*</span> は必須項目です
     </p>
     <form method="POST"
         action="{{ isset($subscription)
@@ -22,30 +22,30 @@
         <div class="grid grid-cols-2 gap-x-8 gap-y-6">
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">サービス名<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">サービス名<span class="ml-1 text-danger">*</span></label>
                 <input type="text" name="name"
                     value="{{ old('name', $subscription->name ?? '') }}"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">金額<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">金額<span class="ml-1 text-danger">*</span></label>
                 <input type="number" name="price"
                     value="{{ old('price', $subscription->price ?? '') }}"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">契約開始日<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">契約開始日<span class="ml-1 text-danger">*</span></label>
                 <input type="date" name="start_date"
                     value="{{ old('start_date', $subscription->start_date ?? '') }}"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">カテゴリ<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">カテゴリ<span class="ml-1 text-danger">*</span></label>
                 <select name="category_id"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
                     <option disabled>選択してください</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
@@ -57,16 +57,16 @@
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">次回更新日<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">次回更新日<span class="ml-1 text-danger">*</span></label>
                 <input type="date" name="renewal_date"
                     value="{{ old('renewal_date', $subscription->renewal_date ?? '') }}"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">利用頻度<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">利用頻度<span class="ml-1 text-danger">*</span></label>
                 <select name="usage_frequency_id"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
                     <option disabled>選択してください</option>
                     @foreach ($frequencies as $freq)
                         <option value="{{ $freq->id }}"
@@ -78,9 +78,9 @@
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">支払い周期<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">支払い周期<span class="ml-1 text-danger">*</span></label>
                 <select name="billing_cycle"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
                     <option value="monthly"
                         {{ old('billing_cycle', $subscription->billing_cycle ?? '') == 'monthly' ? 'selected' : '' }}>
                         月額払い
@@ -93,9 +93,9 @@
             </div>
 
             <div class="flex flex-col">
-                <label class="text-sm font-medium text-gray-500 mb-2">ステータス<span class="ml-1 text-red-500">*</span></label>
+                <label class="text-sm font-medium text-gray-500 mb-2">ステータス<span class="ml-1 text-danger">*</span></label>
                 <select name="status"
-                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+                    class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
                     <option value="active"
                         {{ old('status', $subscription->status ?? '') == 'active' ? 'selected' : '' }}>
                         契約中

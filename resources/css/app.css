@@ -7,12 +7,17 @@ body {
 }
 :root {
     --color-basic: #F2F2F2;
-    --color-primary: #2E7D32;
-    --color-primary-dark: #1B5E20;
-    --color-primary-light: #66BB6A;
+    --color-primary-50:  #E8F5E9;
+    --color-primary-100: #C8E6C9;
+    --color-primary-200: #A5D6A7;
+    --color-primary-300: #81C784;
+    --color-primary-400: #66BB6A;
+    --color-primary-500: #2E7D32;
+    --color-primary-600: #2A6F2D;
+    --color-primary-700: #1B5E20;
     --color-accent: #FFC107;
     --color-danger: #E53935;
 }
 .btn-primary {
-    @apply inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition-colors duration-200;
+    @apply inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-700 text-white px-4 py-2 rounded-md transition-colors duration-200;
 }
