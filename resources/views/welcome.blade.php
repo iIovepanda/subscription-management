@@ -80,7 +80,7 @@
                     <div class="bg-gray-100 px-4 py-3 flex items-center gap-2">
                         <div class="w-3 h-3 bg-red-400 rounded-full"></div>
                         <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                        <div class="w-3 h-3 bg-primary-400 rounded-full"></div>
                     </div>
 
                     <!-- スクショ -->

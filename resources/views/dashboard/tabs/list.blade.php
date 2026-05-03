@@ -40,7 +40,7 @@
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-3">
                                 <a href="{{ route('subscriptions.edit', $sub->id) }}" class="p-1">
-                                    <x-icons.edit class="w-4 h-4 text-gray-500 hover:text-green-700 transition-colors duration-200" />
+                                    <x-icons.edit class="w-4 h-4 text-gray-500 hover:text-primary-700 transition-colors duration-200" />
                                 </a>
                             </div>
                         </td>

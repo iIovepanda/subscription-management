@@ -59,7 +59,7 @@
             <div class="flex flex-col">
                 <label class="text-sm font-medium text-gray-500 mb-2">次回更新日<span class="ml-1 text-danger">*</span></label>
                 <input type="date" name="renewal_date"
-                    value="{{ old('renewal_date', $subscription->renewal_date ?? '') }}"
+                    value="{{ old('renewal_date', isset($subscription) && $subscription->renewal_date ? $subscription->renewal_date->format('Y-m-d') : '') }}"
                     class="border rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-30 focus:border-primary-500">
             </div>
 

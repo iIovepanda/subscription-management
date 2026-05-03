@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\UsageFrequency;
+use Carbon\Carbon;
 
 class Subscription extends Model
 {
@@ -35,6 +36,9 @@ class Subscription extends Model
         'renewal_date',
         'status',
     ];
+    protected $casts = [
+        'renewal_date' => 'date',
+    ];
 
     public function getMonthlyPriceAttribute()
     {
@@ -47,6 +51,25 @@ class Subscription extends Model
 
             default:
                 return $this->price;
+        }
+    }
+
+    public function refreshNextBillingDate()
+    {
+        $nextBillingDate = $this->renewal_date->copy();
+        $today = Carbon::today();
+
+        while ($nextBillingDate->lte($today)) {
+            match ($this->billing_cycle) {
+                'monthly' => $nextBillingDate->addMonth(),
+                'yearly' => $nextBillingDate->addYear(),
+                default => null,
+            };
+        }
+
+        if (!$nextBillingDate->equalTo($this->renewal_date)) {
+            $this->renewal_date = $nextBillingDate;
+            $this->save();
         }
     }
 }

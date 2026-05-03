@@ -24,7 +24,7 @@ class SubscriptionController extends Controller
         Subscription::create(
             $request->validated() + ['user_id' => auth()->id()]
         );
-
+        cache()->forget('ai_' . auth()->id());
         return redirect()
             ->route('dashboard', ['tab' => 'list'])
             ->with('success', 'サブスクを登録しました');
@@ -34,7 +34,7 @@ class SubscriptionController extends Controller
     {
         $subscription = auth()->user()->subscriptions()->findOrFail($id);
         $subscription->delete();
-
+        cache()->forget('ai_' . auth()->id());
         return redirect()->back()
             ->with('success', '削除しました');
     }
@@ -44,7 +44,6 @@ class SubscriptionController extends Controller
         $subscription = auth()->user()->subscriptions()->findOrFail($id);
         $categories = Category::all();
         $frequencies = UsageFrequency::all();
-
         return view('subscriptions.edit', compact('subscription', 'categories', 'frequencies'));
     }
 
@@ -55,7 +54,8 @@ class SubscriptionController extends Controller
         $subscription->update(
             $request->validated()
         );
-
+        cache()->forget('ai_' . auth()->id());
+        
         return redirect()
             ->route('dashboard', ['tab' => 'list'])
             ->with('success', '更新しました');
