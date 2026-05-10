@@ -16,44 +16,70 @@ class AiController extends Controller
         }
         $subscriptions = auth()->user()
             ->subscriptions()
-            ->with('usageFrequency')
+            ->with('category', 'usageFrequency')
+            ->where('status', 'active')
             ->get();
         foreach ($subscriptions as $sub) {
             $sub->monthly_price = $sub->billing_cycle === 'yearly'
                 ? round($sub->price / 12)
                 : $sub->price;
         }
-        //$subscriptions = auth()->user()->subscriptions;
         $total = $subscriptions->sum('monthly_price');
 
         $summaryText = "今月の合計: {$total}円\n\n";
-
+        $data = [];
         foreach ($subscriptions as $sub) {
             $name = $sub->name ?? '不明';
             $price = $sub->monthly_price ?? 0;
 
             $frequency = $sub->usageFrequency?->frequency_name ?? '未設定';
 
-            $summaryText .= "- {$name}: {$price}円 / 利用頻度: {$frequency}\n";
+            $data[] = [
+                'name' => $name,
+                'monthly_price' => $price,
+                'frequency' => $frequency,
+                'category' => $sub->category->name,
+            ];
+        }
+        if (!empty($subscriptions)) {
+            $summaryText = json_encode($data, JSON_UNESCAPED_UNICODE);
+
+            $prompt = "あなたは家計改善アドバイザーです。
+                ユーザーのサブスクリプション情報を分析し、
+                以下の観点でアドバイスしてください。
+
+                - 支出の特徴
+                - コスパが低そうなサービス
+                - 解約候補
+                - 継続価値が高いサービス
+                - 支出バランス
+                - 改善提案
+
+                厳しすぎず、親しみやすい口調で、
+                200文字程度で簡潔にまとめてください。";
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+            ])->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-4.1-mini',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => $prompt
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $summaryText
+                    ]
+                ],
+            ]);
+            $aiMessage = $response['choices'][0]['message']['content'] ?? '取得失敗';
+
+        } else {
+            $aiMessage = 'サブスクが未登録です。';
         }
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
-        ])->post('https://api.openai.com/v1/chat/completions', [
-            'model' => 'gpt-4.1-mini',
-            'messages' => [
-                [
-                    'role' => 'system',
-                    'content' => 'サブスク管理アドバイザーとして、短く具体的にアドバイスしてください（100文字以内）'
-                ],
-                [
-                    'role' => 'user',
-                    'content' => $summaryText
-                ]
-            ],
-        ]);
 
-        $aiMessage = $response['choices'][0]['message']['content'] ?? '取得失敗';
 
         // 成功時だけ保存
         cache()->put($key, $aiMessage, 3600);

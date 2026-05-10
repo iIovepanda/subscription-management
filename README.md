@@ -14,18 +14,20 @@
 # 使用技術
 
 ### フロントエンド
-- Blade（Laravel）
+- Blade
 - Tailwind CSS
-- JavaScript（fetch API）
+- JavaScript
 
 ### バックエンド
-- Laravel
+- PHP 8.5
+- Laravel 13
 
 ### データベース
 - PostgreSQL
 
 ### 開発環境
-- Docker（Laravel Sail）
+- Docker
+- Laravel Sail
 
 ### 外部サービス
 - OpenAI API
