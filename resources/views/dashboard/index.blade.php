@@ -98,18 +98,19 @@
 <x-ai-concierge />
 
 <script>
+    const today = new Date().toISOString().split('T')[0];
+
     @if($upcomingSubscriptions->isNotEmpty())
-        function openModal() {
-            document.getElementById('modal').classList.remove('hidden');
+        if (localStorage.getItem('modalClosedDate') !== today) {
+            function openModal() {
+                document.getElementById('modal').classList.remove('hidden');
+            }
         }
     @endif
-    if (!localStorage.getItem('modalClosed')) {
-        document.getElementById('modal').classList.remove('hidden');
-    }
 
     function closeModal() {
         document.getElementById('modal').classList.add('hidden');
-        localStorage.setItem('modalClosed', 'true');
+        localStorage.setItem('modalClosedDate', today);
     }
 </script>
 </x-app-layout>

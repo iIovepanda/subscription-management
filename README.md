@@ -3,7 +3,7 @@
 サブスクリプションサービスを一元管理し、月額支出の可視化と最適化を目的としたWebアプリです。
 登録されたサブスク情報をもとに、AIが支出状況を分析し、簡単なアドバイスを提供します。
 
-※未デプロイ（ローカル環境で動作）
+URL : https://subscription-app.fly.dev
 
 <p>
   <img src="./public/images/top.png" width="60%">
@@ -19,7 +19,7 @@
 - JavaScript
 
 ### バックエンド
-- PHP 8.5
+- PHP 8.4
 - Laravel 13
 
 ### データベース
@@ -33,9 +33,10 @@
 - OpenAI API
 
 ---
-インフラ構成
-
-未構築
+### インフラ構成
+- Docker
+- Fly.io
+- Fly Postgres
 
 ---
 # 主な機能
